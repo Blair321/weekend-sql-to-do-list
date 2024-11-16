@@ -5,6 +5,15 @@ const todos = require('./routes/todos.router.js');
 
 let PORT = process.env.PORT || 5001;
 app.use(express.json())
+// routes
+app.use('/todos',todos)
+// array for to dos
+const toDoList = {}
+//get route
+app.get('/todo', (req, res) => {
+  console.log('in /todo GET')
+  res.send(toDoList)
+})
 
 
 // Do not modify this!
