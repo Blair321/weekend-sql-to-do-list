@@ -15,6 +15,24 @@ router.get( '/', ( req, res )=>{
         res.sendStatus( 400 );
     })
 })
+router.post('/', (req, res) => {
+    console.log('req.body', req.body);
+    const newToDo = req.body
 
+    const queryText = `
+        INSERT INTO "todos"("text", "isComplete") 
+        VALUES ($1, $2);
+    `
+    const values = [newToDo.text, newToDo.isComplete]
+
+    pool.query(queryText, values)
+        .then((result) => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.log(`Error making query: ${queryText} -`, error)
+            res.sendStatus(500)
+        })
+});
 
 module.exports = router;
