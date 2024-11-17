@@ -26,7 +26,7 @@ function addToDo(event) {
     console.log('in add to do event');
     event.preventDefault()
     const newToDo = {
-        text: document.getElementById("toDo"),
+        text: document.getElementById("toDo").value,
         isComplete: false }
     console.log('adding to do', newToDo);
     axios({
