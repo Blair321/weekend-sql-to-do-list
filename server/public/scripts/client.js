@@ -14,6 +14,7 @@ function getList() {
         console.log('got the list: ', response.data)
         // ! render function to put list onto DOM
         //render function when created 
+        renderToDo(response.data)
     })
     .catch((error) => {
         console.log('ERROR in GET list...', error)
@@ -25,7 +26,7 @@ function addToDo(event) {
     console.log('in add to do event');
     event.preventDefault()
     const newToDo = {
-        text: document.getElementById("toDO"),
+        text: document.getElementById("toDo"),
         isComplete: false }
     console.log('adding to do', newToDo);
     axios({
@@ -42,4 +43,24 @@ function addToDo(event) {
         console.log('ERROR in POST /todo', error)
         alert(error)
     })
+}
+function renderToDo(toDoList) {
+    const toDoTableBody = document.getElementById('toDoList');
+toDoTableBody.innerHTML = ''
+for (let toDo of toDoList) {
+    let completeButton = 'not completed'
+    if (toDo.isComplete) {
+        completeButton = "completed"
+    }
+    toDoTableBody.innerHTML+=(` <tr  data-testid="toDoItem">
+        <td>${toDo.text}</td>
+        <td class="completed"><button 
+        data-testid="completeButton" 
+        data-id="${toDo.id}"
+        onClick="updateStatus(${toDo.id},${toDo.isComplete})">${completeButton}</button></td>
+        <td><button data-testid="deleteButton" onClick="deleteToDo(${toDo.id})">DELETE</button></td>
+      </tr>
+        
+        `)
+}
 }
