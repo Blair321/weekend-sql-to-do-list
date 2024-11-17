@@ -34,5 +34,21 @@ router.post('/', (req, res) => {
             res.sendStatus(500)
         })
 });
+router.delete( '/:id', ( req, res )=>{
+    console.log( 'in /todos DELETE:', req.params.id );
+        // assemble query
+        const queryText = `DELETE FROM todos WHERE id=$1;`;
+        const values = [ req.params.id ];
+        // run pool.query
+        pool.query( queryText, values ).then( ( results )=>{
+            console.log("READY and ID", values)
+            res.sendStatus( 200 ); // "OK"
+        }).catch( ( err )=>{
+            // handle any errors
+            console.log( err );
+            res.sendStatus( 400 );
+        })
+})
+
 
 module.exports = router;

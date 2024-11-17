@@ -64,3 +64,21 @@ for (let toDo of toDoList) {
         `)
 }
 }
+function deleteToDo( id ) {
+    console.log("deleting todo")
+    const toDoDelete = {
+      id: id
+    };
+  
+    // Send the new artist to the server as data
+    axios({
+      method: 'DELETE',
+      url: '/todos/' + id,
+    }).then(function(response) {
+      console.log(response.data);
+      getList();
+    }).catch(function(error) {
+      console.log('error in toDo delete', error); 
+      alert('Error deleting toDos. Please try again later.')       
+    });
+  }
