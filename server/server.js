@@ -10,7 +10,7 @@ app.use('/todos',todos)
 // array for to dos
 const toDoList = {}
 //get route
-app.get('/todo', (req, res) => {
+app.get('/todos', (req, res) => {
   console.log('in /todo GET')
   res.send(toDoList)
 })
