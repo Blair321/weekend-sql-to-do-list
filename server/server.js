@@ -15,7 +15,11 @@ app.get('/todos', (req, res) => {
   res.send(toDoList)
 })
 
-
+app.post('/todos', (req, res) => {
+  console.log(`In /todos POST with`, req.body);
+  toDoList.push(req.body);
+  res.sendStatus(201);
+});
 // Do not modify this!
 if (process.env.NODE_ENV == 'test') {
   PORT = 5002;
