@@ -50,14 +50,19 @@ toDoTableBody.innerHTML = ''
 for (let toDo of toDoList) {
     console.log(toDo);
     let completeButton = 'not completed'
+    let buttonColor = ''
     if (toDo.isComplete) {
         completeButton = "completed"
+        buttonColor = 'complete'
     }
+
+    const isTrue = toDo.isComplete ? true : false;
     toDoTableBody.innerHTML+=(` <tr  data-testid="toDoItem">
         <td>${toDo.text}</td>
         <td class="completed"><button 
         data-testid="completeButton" 
         data-id="${toDo.id}"
+        class="${buttonColor}"
         onClick="taskCompleted(${toDo.id},${toDo.isComplete})">${completeButton}</button></td>
         <td><button data-testid="deleteButton" onClick="deleteToDo(${toDo.id})">DELETE</button></td>
       </tr>
