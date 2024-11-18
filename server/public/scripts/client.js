@@ -48,6 +48,7 @@ function renderToDo(toDoList) {
     const toDoTableBody = document.getElementById('toDoList');
 toDoTableBody.innerHTML = ''
 for (let toDo of toDoList) {
+    console.log(toDo);
     let completeButton = 'not completed'
     if (toDo.isComplete) {
         completeButton = "completed"
@@ -57,7 +58,7 @@ for (let toDo of toDoList) {
         <td class="completed"><button 
         data-testid="completeButton" 
         data-id="${toDo.id}"
-        onClick="updateStatus(${toDo.id},${toDo.isComplete})">${completeButton}</button></td>
+        onClick="taskCompleted(${toDo.id},${toDo.isComplete})">${completeButton}</button></td>
         <td><button data-testid="deleteButton" onClick="deleteToDo(${toDo.id})">DELETE</button></td>
       </tr>
         
@@ -80,5 +81,29 @@ function deleteToDo( id ) {
     }).catch(function(error) {
       console.log('error in toDo delete', error); 
       alert('Error deleting toDos. Please try again later.')       
+    });
+  }
+  function taskCompleted( id, isComplete){
+    console.log("Activated Ready to Complete")
+    
+    const completedTask = {
+      id: id,
+      isComplete: true
+    };
+    if( isComplete ){
+      completedTask.isComplete = false;
+    }
+    console.log(completedTask);
+    // Send the new artist to the server as data
+    axios({
+      method: 'PUT',
+      url: '/todos/' + id,
+      data: completedTask
+    }).then(function(response) {
+      console.log(response.data);
+      getList();
+    }).catch(function(error) {
+      console.log('error in completed update', error); 
+      alert('Error updating completed. Please try again later.')       
     });
   }

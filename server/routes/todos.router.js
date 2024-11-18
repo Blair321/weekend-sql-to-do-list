@@ -8,6 +8,7 @@ router.get( '/', ( req, res )=>{
     // run pool.query
     pool.query( queryText ).then( ( results )=>{
         // return results.rows
+        console.log(results.rows);
         res.send( results.rows );
     }).catch( ( err )=>{
         // handle any errors
@@ -49,6 +50,20 @@ router.delete( '/:id', ( req, res )=>{
             res.sendStatus( 400 );
         })
 })
+router.put( '/:id', ( req, res )=>{
+    const queryText = `UPDATE todos SET "isComplete"=$1 WHERE id=$2;`;
+    const r = req.body.isComplete ;
+     
+    const values = [  r , req.params.id  ];
+    console.log(values);
+    // run pool.query
+    pool.query( queryText, values ).then( ( results )=>{
+        res.sendStatus( 200 ); // "OK"
+    }).catch( ( err )=>{
+        // handle any errors
+        console.log( err );
+        res.sendStatus( 400 );
+    })
 
-
+})
 module.exports = router;
